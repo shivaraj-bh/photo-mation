@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>PhotoMation</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			html, body {
+				height: 100%;
+			}
+           
+			body {
+                background:url('2k_stars.jpg') no-repeat center center;
+            background-size:cover;  
+
+            /* Workaround for some mobile browsers */
+            min-height:100%;    
+            padding-top: 20px;
+            padding-bottom: 20px;
+				margin: 0;
+				font-family: Helvetica, sans-serif;
+				overflow: hidden;
+			}
+			a {
+				color: #ffffff;
+			}
+			#info {
+				position: absolute;
+				width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				font-weight: bold;
+				text-align: center;
+				z-index: 1;
+			}
+			#menu {
+				position: absolute;
+				bottom: 20px;
+				width: 100%;
+				text-align: center;
+			}
+			.element {
+				width: 160px;
+				height: 200px;
+				box-shadow: 5px 5px 12px rgba(0,255,255,0.5);
+				border: 2px solid rgba(127,255,255,0.25);
+				text-align: center;
+				cursor: default;
+                margin:5px;
+display: inline-block;
+			}
+			.element:hover {
+				box-shadow: 10px 10px 12px rgba(0,255,255,0.75);
+				border: 3px solid rgba(127,255,255,0.75);
+                opacity:0.6;
+                -webkit-transform: scale(4); 
+    -moz-transform: scale(4);
+    -o-transform: scale(4);
+    transform: scale(4);
+
+			}
+				.element .number {
+					position: absolute;
+					top: 20px;
+					right: 20px;
+					font-size: 12px;
+					color: rgba(127,255,255,0.75);
+				}
+				.element .symbol {
+					position: absolute;
+					top: 40px;
+					left: 0px;
+					right: 0px;
+					font-size: 60px;
+					font-weight: bold;
+					color: rgba(255,255,255,0.75);
+					text-shadow: 0 0 10px rgba(0,255,255,0.95);
+				}
+				.element .details {
+					position: absolute;
+					bottom: 15px;
+					left: 0px;
+					right: 0px;
+					font-size: 12px;
+					color: rgba(127,255,255,0.75);
+				}
+			button {
+				color: rgba(127,255,255,0.75);
+				background: transparent;
+				outline: 1px solid rgba(127,255,255,0.75);
+				border: 0px;
+				padding: 5px 10px;
+				cursor: pointer;
+			}
+			button:hover {
+				background-color: rgba(0,255,255,0.5);
+			}
+			button:active {
+				color: #000000;
+				background-color: rgba(0,255,255,0.75);
+			}
+            #container{
+                background-color: #113131;
+            }
+            input#file{
+                width: 0.1px;
+                height:0.1px;
+                position:absolute;
+                z-index: -1;
+            }
+          
+            .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+
+.img1 {
+    display:block;
+    margin:auto;
+    width:310px
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+}
+ 
+.transition {
+    -webkit-transform: scale(4); 
+    -moz-transform: scale(4);
+    -o-transform: scale(4);
+    transform: scale(4);
+}
+        </style>
+         <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+	<body id="wtf">
+           
+            <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+            <script>
+              // Initialize Firebase
+              var config = {
+                apiKey: "AIzaSyBl72KMxPsbTzxyahS_bDIv_K1h60xsbac",
+                authDomain: "food-fa4f0.firebaseapp.com",
+                databaseURL: "https://food-fa4f0.firebaseio.com",
+                projectId: "food-fa4f0",
+                storageBucket: "food-fa4f0.appspot.com",
+                messagingSenderId: "906623910531"
+              };
+              firebase.initializeApp(config);
+            </script>
+            <script src="js/app1.js">
+                
+            </script>
+        <script>
+            var user;
+
+              
+           
+            firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+      this.user = user;
+      console.log("this is user"+this.user.uid);
+
+      console.log("I don't know");;
+    log_func(this.user.uid);
+  } else {
+    
+  }
+});
+
+
+            </script>
+            
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.js"></script>
+		<script src="js/tween.min.js"></script>
+		<script src="js/TrackballControls.js"></script>
+        <script src="js/CSS3DRenderer.js"></script>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span> 
+                </button>
+                <a class="navbar-brand" href="#">PhotoMation</a>
+              </div>
+              <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="https://github.com/sbh69840" target="_blank">&copy;Shivaraj Hosalli</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li id="menu_signin" type="button" data-toggle="modal" data-target="#myModal"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign IN</a></li>
+                  <li id="menu_signout"><a href="#"><span class="glyphicon glyphicon-log-in"></span>Sign Out</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+              <div id="myModal" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Sign In</h4>
+
+                          </div>
+                          <div class="modal-body">
+                             <button id="googlelogin"class="btn btn-default">Google</button>   
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+
+                          </div>
+
+                      </div>
+
+                  </div>
+
+              </div>
+        
+        <div id="homee">      
+		<div id="container"></div>
+		<div id="menu">
+			<button class="btn" id="table">NORM</button>
+			<button class="btn" id="sphere">SPHERE</button>
+			<button class="btn" id="helix">HELIX</button>
+            <button class="btn" id="grid">GRID</button>
+            <label class="btn upload-group">UPLOAD
+                <input type="file" class="upload-group" id="file">
+            </label>
+            <button class="btn" id="uploadButton" onclick="uploadFile()">Submit</button>
+		</div>
+       </div>
+		<script>
+$('#menu_signout').on('click',function(){
+    firebase.auth().signOut().then(function() {
+  console.log('Signed Out');
+  window.location.href = 'index.html'
+}, function(error) {
+  console.error('Sign Out Error', error);
+});
+});
+$('#fblogin').on('click',function(){
+  var provider = new firebase.auth.FacebookAuthProvider();
+firebase.auth().signInWithPopup(provider).then(function(result) {
+var token = result.credential.accessToken;
+var user = result.user;
+$('.full').hide();
+$('#container').show();
+}).catch(function(error) {
+var errorCode = error.code;
+var errorMessage = error.message;
+var email = error.email;
+var credential = error.credential;
+}); 
+});
+$('#googlelogin').on('click',function(){
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithRedirect(provider);
+firebase.auth().getRedirectResult().then(function(result) {
+var user = result.user;
+$('.full').hide();
+$('#container').show();
+}).catch(function(error) {
+console.log(error);
+var errorCode = error.code;
+var errorMessage = error.message;
+var email = error.email;
+var credential = error.credential;
+}); 
+});
+$('#twitterlogin').on('click',function(){
+  var provider = new firebase.auth.TwitterAuthProvider();
+firebase.auth().signInWithPopup(provider).then(function(result) {
+var token = result.credential.accessToken;
+var user = result.user;
+$('#full').hide();
+$('#container').show();
+}).catch(function(error) {
+var errorCode = error.code;
+var errorMessage = error.message;
+var email = error.email;
+var credential = error.credential;
+}); 
+});
+var selectedFile;
+$("#uploadButton").hide();
+$("#file").on("change",function(event){
+    selectedFile = event.target.files[0];
+    $("#uploadButton").show();
+});
+
+function uploadFile(){
+    var filename = selectedFile.name;
+    var storageRef = firebase.storage().ref('/images/'+filename);
+    var uploadTask = storageRef.put(selectedFile);
+    uploadTask.on('state_changed',function(snapshot){
+
+    },function(error){
+console.log(error);
+    },function(){
+        var downloadURL = uploadTask.snapshot.downloadURL;
+        var user = firebase.auth().currentUser;
+        var user_string = user.uid+='';
+        var download_url = downloadURL+='';
+        download_url = download_url.replace(/[^a-zA-Z0-9]/g,'_');
+        firebase.database().ref("/"+user_string+"/"+download_url).set({
+            url:downloadURL
+        });
+        log_func(user_string);
+        console.log(downloadURL);
+    });
+
+}
+        </script>
+
+<!-- The Modal -->
+<div id="myModal1" class="modal">
+  <span class="close" id="closetheshit">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<script>
+// Get the modal
+
+var span1 = document.getElementById("closetheshit");
+
+// When the user clicks on <span> (x), close the modal
+span1.onclick = function() { 
+    modal.style.display = "none";
+}
+
+</script>
+    <script>
+        $(document).ready(function(){
+          $('.element').hover(function() {
+              $(this).addClass('transition');
+       
+          }, function() {
+              $(this).removeClass('transition');
+          });
+        });
+      </script>
+	</body>
+</html>
