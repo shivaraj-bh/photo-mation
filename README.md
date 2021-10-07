@@ -1,7 +1,7 @@
 
 
 # PhotoMation!
-This is a simplae website which let's you add your images on the firebase storage and then view it in different animations and from different angles. The images will have one center for all of them and they make pattern around this point.
+This webapp let's you add your images on the firebase storage and then view it in different 3D animations.
 
 # Steps to run the website on your local machine
 
